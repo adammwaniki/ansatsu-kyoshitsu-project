@@ -162,5 +162,6 @@ class Classroom(db.Model, SerializerMixin):
    name = db.Column(db.String(30), nullable = False, unique = True)
 
 
+
    def __repr__(self):
-       return f'<StudentSubject {self.topic}>'
+       return f'<StudentSubject {self.topic}
