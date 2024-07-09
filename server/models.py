@@ -1,37 +1,32 @@
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+#from flask_sqlalchemy import SQLAlchemy
+#from sqlalchemy import MetaData
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 from config import db
 
 
-# Models go here!
+# Teacher model
 class Teacher(db.Model, SerializerMixin):
    __tablename__ = 'teachers'
 
 
-   id = db.Column(db.Integer, primary_key = True)
-   name = db.Column(db.String(120), nullable = False)
-   email = db.Column(db.String(255), unique = True, nullable = False)
-   password = db.Column(db.String(32), nullable = False)
-  
-   # adding foreign keys for the classrooms
-   classroom_id = db.Column(db.Integer, db.ForeignKey('classrooms.id'))
+   id = db.Column(db.Integer, primary_key=True)  # Primary key
+   name = db.Column(db.String(120), nullable=False)  # Teacher's name
+   email = db.Column(db.String(255), unique=True, nullable=False)  # Teacher's unique email
+   password = db.Column(db.String(32), nullable=False)  # Teacher's password
+   classroom_id = db.Column(db.Integer, db.ForeignKey('classrooms.id'))  # Foreign key to Classroom
 
 
-   # adding relationships
-   teacher_subjects = db.relationship('TeacherSubject', back_populates = 'teachers', cascade='all, delete-orphan')
+   # Relationship with TeacherSubject
+   teacher_subjects = db.relationship('TeacherSubject', back_populates='teacher', cascade='all, delete-orphan')
+   # Association proxy to subjects through teacher_subjects
    subjects = association_proxy('teacher_subjects', 'subject')
 
 
-   # adding serialization rules
+   serialize_rules = ('-subjects',)  # Exclude subjects from serialization
 
 
-   serialize_rules = ('-subjects',)
-
-
-   # Add validators
    @validates('email')
    def validate_email(self, key, email):
        if '@' not in email or '.' not in email:
@@ -47,121 +42,123 @@ class Teacher(db.Model, SerializerMixin):
        return password
 
 
-
-
    def __repr__(self):
        return f'<Teacher(id={self.id}, name={self.name})>'
 
 
+# Subject model
 class Subject(db.Model, SerializerMixin):
    __tablename__ = 'subjects'
 
 
-   id = db.Column(db.Integer, primary_key = True)
-   name = db.Column(db.String(120), nullable = False)
-   teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'), nullable = False)
-  
-   # adding relationships
-   teacher_subjects = db.relationship('TeacherSubject', back_populates = 'subjects', cascade='all, delete-orphan')
-   subjects = association_proxy('teacher_subjects', 'teacher')
+   id = db.Column(db.Integer, primary_key=True)  # Primary key
+   name = db.Column(db.String(120), nullable=False)  # Subject name
 
 
-   # adding serialization rules
-   serialize_rules = ('-teachers',)
+   # Relationship with TeacherSubject
+   teacher_subjects = db.relationship('TeacherSubject', back_populates='subject', cascade='all, delete-orphan')
+   # Relationship with StudentSubject
+   student_subjects = db.relationship('StudentSubject', back_populates='subject', cascade='all, delete-orphan')
+   # Association proxy to teachers through teacher_subjects
+   teachers = association_proxy('teacher_subjects', 'teacher')
+   # Association proxy to students through student_subjects
+   students = association_proxy('student_subjects', 'student')
+
+
+   serialize_rules = ('-teachers', '-students',)  # Exclude teachers and students from serialization
 
 
    def __repr__(self):
-       return f'<Subject (id={self.id}, name={self.name})>'
+       return f'<Subject(id={self.id}, name={self.name})>'
 
 
+# TeacherSubject model
 class TeacherSubject(db.Model, SerializerMixin):
    __tablename__ = 'teacher_subjects'
 
 
-   id = db.Column(db.Integer, primary_key=True)
-   topic = db.Column(db.String(30), nullable=False)
+   id = db.Column(db.Integer, primary_key=True)  # Primary key
+   topic = db.Column(db.String(30), nullable=False)  # Topic of the subject
+   teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))  # Foreign key to Teacher
+   subject_id = db.Column(db.Integer, db.ForeignKey('subjects.id'))  # Foreign key to Subject
 
 
-   # adding foreign keys for the relationships
-   teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
-   subject_id = db.Column(db.Integer, db.ForeignKey('subjects.id'))
-
-
-   # adding the relationships
+   # Relationship with Teacher
    teacher = db.relationship('Teacher', back_populates='teacher_subjects')
+   # Relationship with Subject
    subject = db.relationship('Subject', back_populates='teacher_subjects')
 
 
-   # add serialization rules
-   serialize_rules = ('-teacher.teacher_subjects', '-subject.teacher_subjects',)
+   serialize_rules = ('-teacher.teacher_subjects', '-subject.teacher_subjects',)  # Exclude related objects from serialization
 
 
    def __repr__(self):
-       return f'<TeacherSubject {self.topic}>'
+       return f'<TeacherSubject(topic={self.topic})>'
 
 
+# Student model
 class Student(db.Model, SerializerMixin):
    __tablename__ = 'students'
 
 
-   id = db.Column(db.Integer, primary_key = True)
-   name = db.Column(db.String(120), nullable = False)
+   id = db.Column(db.Integer, primary_key=True)  # Primary key
+   name = db.Column(db.String(120), nullable=False)  # Student's name
+   classroom_id = db.Column(db.Integer, db.ForeignKey('classrooms.id'))  # Foreign key to Classroom
 
 
-   # adding foreign keys for the classrooms
-   classroom_id = db.Column(db.Integer, db.ForeignKey('classrooms.id'))
-  
-
-
-   # adding relationships
-   student_subjects = db.relationship('StudentSubject', back_populates = 'students', cascade='all, delete-orphan')
+   # Relationship with StudentSubject
+   student_subjects = db.relationship('StudentSubject', back_populates='student', cascade='all, delete-orphan')
+   # Association proxy to subjects through student_subjects
    subjects = association_proxy('student_subjects', 'subject')
 
 
-   # adding serialization rules
-   serialize_rules = ('-subjects',)
+   serialize_rules = ('-subjects',)  # Exclude subjects from serialization
 
 
    def __repr__(self):
-       return f'<Student {self.name}>'
-  
+       return f'<Student(id={self.id}, name={self.name})>'
 
 
+# StudentSubject model
 class StudentSubject(db.Model, SerializerMixin):
    __tablename__ = 'student_subjects'
 
 
-   id = db.Column(db.Integer, primary_key=True)
-   topic = db.Column(db.String(30), nullable=False)
+   id = db.Column(db.Integer, primary_key=True)  # Primary key
+   topic = db.Column(db.String(30), nullable=False)  # Topic of the subject
+   student_id = db.Column(db.Integer, db.ForeignKey('students.id'))  # Foreign key to Student
+   subject_id = db.Column(db.Integer, db.ForeignKey('subjects.id'))  # Foreign key to Subject
 
 
-   # adding foreign keys for the relationships
-   student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
-   subject_id = db.Column(db.Integer, db.ForeignKey('subjects.id'))
-
-
-   # adding the relationships
+   # Relationship with Student
    student = db.relationship('Student', back_populates='student_subjects')
+   # Relationship with Subject
    subject = db.relationship('Subject', back_populates='student_subjects')
 
 
-   # add serialization rules
-   serialize_rules = ('-student.student_subjects', '-subject.student_subjects',)
+   serialize_rules = ('-student.student_subjects', '-subject.student_subjects',)  # Exclude related objects from serialization
 
 
    def __repr__(self):
-       return f'<StudentSubject {self.topic}>'
-  
+       return f'<StudentSubject(topic={self.topic})>'
 
 
+# Classroom model
 class Classroom(db.Model, SerializerMixin):
    __tablename__ = 'classrooms'
 
 
-   id = db.Column(db.Integer, primary_key = True)
-   name = db.Column(db.String(30), nullable = False, unique = True)
+   id = db.Column(db.Integer, primary_key=True)  # Primary key
+   name = db.Column(db.String(30), nullable=False, unique=True)  # Classroom name, unique
 
+
+   # Relationship with Teacher and Student
+   teachers = db.relationship('Teacher', backref='classroom', cascade='all, delete-orphan')
+   students = db.relationship('Student', backref='classroom', cascade='all, delete-orphan')
 
 
    def __repr__(self):
-       return f'<StudentSubject {self.topic}
+       return f'<Classroom(id={self.id}, name={self.name})>'
+
+
+
