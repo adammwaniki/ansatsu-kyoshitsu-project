@@ -1,8 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ClassroomList from './components/ClassroomList';
+import ClassroomDetails from './components/ClassroomDetails';
+import NewClassroom from './components/NewClassroom';
 
 function App() {
-  return <h1>Project Client</h1>;
+  return (
+    <Router>
+      <div>
+        <Switch>
+          <Route exact path="/classroom" component={ClassroomList} />
+          <Route path="/classroom/:id" component={ClassroomDetails} />
+          <Route path="/new-classroom" component={NewClassroom} />
+        </Switch>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
