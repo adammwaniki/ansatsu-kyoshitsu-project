@@ -60,6 +60,4 @@ class TeacherSubject(db.Model, SerializerMixin):
         return f'<TeacherSubject {self.topic}>'
 
 
-    
-
-    
+  
