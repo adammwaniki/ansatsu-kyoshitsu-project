@@ -6,6 +6,7 @@ import Teacher from './Teacher';
 import TeacherDetails from './TeacherDetails';
 import Classroom from './Classroom';
 import Student from './Student';
+import StudentDetails from './StudentDetails';
 
 function App() {
   const defaultTeachers = [
@@ -24,8 +25,10 @@ function App() {
         <Route exact path="/teachers" render={() => <Teacher teachers={defaultTeachers} />} />
         <Route path="/teacher/:id" render={() => <TeacherDetails teachers={defaultTeachers} />} />
         <Route path="/classrooms" component={Classroom} />
-        <Route path="/students" component={Student} />
+        <Route exact path="/students" component={Student} /> {/* Route for Student component */}
+          <Route path="/student/:id" component={StudentDetails} /> {/* Route for StudentDetails component */}
       </Switch>
+      
     </div>
   );
 }

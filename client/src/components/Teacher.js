@@ -1,3 +1,4 @@
+// src/components/Teacher.js
 import React, { useState, useEffect } from 'react';
 import TeacherCardItem from './TeacherCardItem';
 import AddTeacher from './AddTeacher';

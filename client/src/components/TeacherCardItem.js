@@ -1,3 +1,4 @@
+// src/components/TeacherCardItem.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/TeacherCardItem.css';

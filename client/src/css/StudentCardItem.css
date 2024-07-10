@@ -1,0 +1,88 @@
+/* StudentCardItem.css */
+
+.student-card {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    width: 100%;
+  }
+  
+  .student-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .student-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #007bff;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .student-info {
+    flex: 1;
+  }
+  
+  .student-name {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  
+  .student-id {
+    color: #6c757d;
+  }
+  
+  .student-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .action-btn {
+    padding: 8px 16px;
+    margin-left: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  
+  .details-btn {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  
+  .details-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .update-btn {
+    background-color: #28a745;
+    color: #ffffff;
+  }
+  
+  .update-btn:hover {
+    background-color: #218838;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333;
+  }
+  
