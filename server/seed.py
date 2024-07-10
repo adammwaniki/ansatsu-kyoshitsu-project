@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# /server/seed.py
 
 from faker import Faker
 from random import choice as rc, randint
