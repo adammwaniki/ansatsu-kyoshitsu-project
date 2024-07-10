@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 #!/usr/bin/env python3
 # /server/seed.py
 
@@ -78,4 +76,3 @@ with app.app_context():
             student_subjects.append(ss)
     db.session.add_all(student_subjects)
     db.session.commit()
->>>>>>> 9009641b578315d532d98fea76890dadf158cc62
