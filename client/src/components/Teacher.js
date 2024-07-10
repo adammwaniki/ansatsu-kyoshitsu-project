@@ -1,9 +1,8 @@
 // src/components/Teacher.js
 import React, { useState, useEffect } from 'react';
 import TeacherCardItem from './TeacherCardItem';
-import AddTeacher from './AddTeacher';
-import UpdateTeacher from './UpdateTeacher';
 import '../css/Teacher.css';
+import AddTeacher from './AddTeacher';
 
 const API_URL = '/teachers';
 
@@ -12,8 +11,7 @@ function Teacher() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isAddTeacherOpen, setIsAddTeacherOpen] = useState(false);
-  const [isUpdateTeacherOpen, setIsUpdateTeacherOpen] = useState(false);
-  const [selectedTeacher, setSelectedTeacher] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchTeachers();
@@ -35,37 +33,6 @@ function Teacher() {
     }
   }
 
-  function handleUpdate(teacherId) {
-    const teacherToUpdate = teachers.find(teacher => teacher.id === teacherId);
-    setSelectedTeacher(teacherToUpdate);
-    setIsUpdateTeacherOpen(true);
-  }
-
-  async function updateTeacher(teacherId, updatedTeacherData) {
-    try {
-      const response = await fetch(`${API_URL}/${teacherId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedTeacherData),
-      });
-      if (!response.ok) {
-        throw new Error('Failed to update teacher');
-      }
-      const updatedTeacher = await response.json();
-      setTeachers(prevTeachers => 
-        prevTeachers.map(teacher => 
-          teacher.id === teacherId ? { ...teacher, ...updatedTeacher } : teacher
-        )
-      );
-      setIsUpdateTeacherOpen(false);
-    } catch (error) {
-      console.error('Error updating teacher:', error);
-      // You might want to show an error message to the user here
-    }
-  }
-
   async function handleDelete(teacherId) {
     try {
       const response = await fetch(`${API_URL}/${teacherId}`, {
@@ -79,6 +46,18 @@ function Teacher() {
       console.error('Error deleting teacher:', error);
       // You might want to show an error message to the user here
     }
+  }
+
+  function handleSearchChange(event) {
+    setSearchQuery(event.target.value);
+  }
+
+  function handleAddTeacherOpen() {
+    setIsAddTeacherOpen(true);
+  }
+
+  function handleAddTeacherClose() {
+    setIsAddTeacherOpen(false);
   }
 
   async function handleAddTeacher(newTeacher) {
@@ -102,6 +81,10 @@ function Teacher() {
     }
   }
 
+  const filteredTeachers = teachers.filter(teacher =>
+    teacher.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -109,33 +92,29 @@ function Teacher() {
     <div className="teacher-container">
       <div className="teacher-header">
         <h1>Our Teachers</h1>
-        <button className="add-teacher-btn" onClick={() => setIsAddTeacherOpen(true)}>
+        <input
+          type="text"
+          placeholder="Search Teachers..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="search-input"
+        />
+        <button className="add-teacher-btn" onClick={handleAddTeacherOpen}>
           Add Teacher
         </button>
       </div>
+      {isAddTeacherOpen && (
+        <AddTeacher onClose={handleAddTeacherClose} onAddTeacher={handleAddTeacher} />
+      )}
       <div className="teacher-grid">
-        {teachers.map(teacher => (
+        {filteredTeachers.map(teacher => (
           <TeacherCardItem 
             key={teacher.id} 
             teacher={teacher} 
-            onUpdate={handleUpdate}
             onDelete={handleDelete}
           />
         ))}
       </div>
-      {isAddTeacherOpen && (
-        <AddTeacher 
-          onClose={() => setIsAddTeacherOpen(false)}
-          onAddTeacher={handleAddTeacher}
-        />
-      )}
-      {isUpdateTeacherOpen && selectedTeacher && (
-        <UpdateTeacher 
-          teacher={selectedTeacher}
-          onClose={() => setIsUpdateTeacherOpen(false)}
-          onUpdate={updateTeacher}
-        />
-      )}
     </div>
   );
 }

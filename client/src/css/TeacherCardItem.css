@@ -59,3 +59,15 @@
 .delete-btn {
   background-color: #dc3545;
 }
+
+
+
+.save-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+}

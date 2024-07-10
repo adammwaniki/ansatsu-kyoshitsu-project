@@ -16,6 +16,7 @@ function Student() {
     classroom_id: '',
     subject_id: ''
   });
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchStudents();
@@ -114,6 +115,19 @@ function Student() {
     }));
   }
 
+  function handleSearchInputChange(event) {
+    setSearchQuery(event.target.value);
+  }
+
+  function filteredStudents() {
+    return students.filter(student => {
+      return (
+        student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        student.classroom_id.toString().includes(searchQuery)
+      );
+    });
+  }
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -124,6 +138,12 @@ function Student() {
         <button className="add-student-btn" onClick={handleAddStudentOpen}>
           Add Student
         </button>
+        <input
+          type="text"
+          placeholder="Search by name or classroom ID"
+          value={searchQuery}
+          onChange={handleSearchInputChange}
+        />
       </div>
       {isAddStudentOpen && (
         <AddStudentForm
@@ -134,7 +154,7 @@ function Student() {
         />
       )}
       <div className="student-list">
-        {students.map(student => (
+        {filteredStudents().map(student => (
           <StudentCardItem
             key={student.id}
             student={student}

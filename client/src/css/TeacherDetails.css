@@ -1,81 +1,75 @@
-.student-details-container {
+.teacher-details-container {
   max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  margin: 2rem auto;
+  padding: 0 1rem;
 }
 
 .back-link {
   display: inline-block;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
   color: #007bff;
   text-decoration: none;
+  font-weight: bold;
 }
 
-.student-details {
+.teacher-details {
   background-color: #fff;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-.student-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.student-header h1 {
-  font-size: 24px;
-  margin: 0;
-}
-
-.student-header button {
-  padding: 8px 12px;
+.teacher-header {
   background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  color: white;
+  padding: 2rem;
+  text-align: center;
 }
 
-.student-header button:hover {
-  background-color: #0056b3;
-}
-
-.student-info {
-  margin-top: 20px;
-}
-
-.student-info p {
+.teacher-header h1 {
   margin: 0;
-  font-size: 16px;
+  font-size: 2rem;
 }
 
-.student-info h2 {
-  margin-top: 10px;
-  font-size: 20px;
+.teacher-info {
+  padding: 2rem;
+}
+
+.teacher-info p {
+  margin: 0.5rem 0;
+}
+
+.teacher-subjects {
+  padding: 0 2rem 2rem;
+}
+
+.teacher-subjects h2 {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 0.5rem;
 }
 
 .subject-item {
-  margin-bottom: 15px;
-  padding: 10px;
-  background-color: #f7f7f7;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
 }
 
 .subject-item h3 {
-  margin: 0;
-  font-size: 18px;
+  color: #28a745;
+  margin-top: 0;
 }
 
-.subject-item p {
-  margin: 5px 0 0;
-  font-size: 16px;
-  color: #555;
+.subject-item h4 {
+  margin-bottom: 0.5rem;
+}
+
+.subject-item ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.subject-item li {
+  margin-bottom: 0.5rem;
 }
