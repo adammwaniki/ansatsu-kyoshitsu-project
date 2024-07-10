@@ -140,6 +140,14 @@ function Student() {
           Add Student
         </button>
       </div>
+      {isAddStudentOpen && (
+        <AddStudentForm
+          onClose={handleAddStudentClose}
+          onAddStudent={addStudent}
+          newStudentData={newStudentData}
+          onInputChange={handleInputChange}
+        />
+      )}
       <div className="student-list">
         {students.map(student => (
           <StudentCardItem
@@ -156,14 +164,7 @@ function Student() {
           onClose={() => setSelectedStudent(null)}
         />
       )}
-      {isAddStudentOpen && (
-        <AddStudentForm
-          onClose={handleAddStudentClose}
-          onAddStudent={addStudent}
-          newStudentData={newStudentData}
-          onInputChange={handleInputChange}
-        />
-      )}
+      
       {isUpdateStudentOpen && selectedStudent && (
         <UpdateStudentForm
           student={selectedStudent}

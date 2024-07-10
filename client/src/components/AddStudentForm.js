@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function AddStudentForm({ newStudentData, onInputChange, onAddStudent, onClose }) {
+function AddStudentForm({ onAddStudent, onClose }) {
+  const [newStudentData, setNewStudentData] = useState({
+    name: '',
+    classroom_id: '',
+    subject_id: '',
+  });
+
   const handleSubmit = (event) => {
     event.preventDefault();
     onAddStudent(newStudentData);
+    setNewStudentData({
+      name: '',
+      classroom_id: '',
+      subject_id: '',
+    });
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setNewStudentData(prevData => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
@@ -16,7 +35,7 @@ function AddStudentForm({ newStudentData, onInputChange, onAddStudent, onClose }
             type="text"
             name="name"
             value={newStudentData.name}
-            onChange={onInputChange}
+            onChange={handleInputChange}
             required
           />
         </label>
@@ -26,7 +45,7 @@ function AddStudentForm({ newStudentData, onInputChange, onAddStudent, onClose }
             type="number"
             name="classroom_id"
             value={newStudentData.classroom_id}
-            onChange={onInputChange}
+            onChange={handleInputChange}
             required
           />
         </label>
@@ -36,12 +55,12 @@ function AddStudentForm({ newStudentData, onInputChange, onAddStudent, onClose }
             type="number"
             name="subject_id"
             value={newStudentData.subject_id}
-            onChange={onInputChange}
+            onChange={handleInputChange}
             required
           />
         </label>
         <div className="form-buttons">
-          <button type="submit">Add</button>
+          <button type="submit">Add Student</button>
           <button type="button" onClick={onClose}>Cancel</button>
         </div>
       </form>

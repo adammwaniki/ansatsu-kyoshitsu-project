@@ -1,49 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const UpdateStudentForm = ({ student, onUpdate, onClose }) => {
-  const [updatedName, setUpdatedName] = useState(student.name);
-  const [updatedClassroomId, setUpdatedClassroomId] = useState(student.classroom_id);
+function UpdateStudentForm({ student, onUpdate, onClose }) {
+  const [updatedStudentData, setUpdatedStudentData] = useState({
+    name: student.name,
+    classroom_id: student.classroom_id,
+  });
 
-  function handleSubmit(event) {
+  useEffect(() => {
+    setUpdatedStudentData({
+      name: student.name,
+      classroom_id: student.classroom_id,
+    });
+  }, [student]);
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const updatedStudentData = {
-      name: updatedName,
-      classroom_id: updatedClassroomId,
-    };
-    onUpdate(updatedStudentData);
-  }
+    onUpdate(student.id, updatedStudentData);
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUpdatedStudentData(prevData => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   return (
-    <div className="update-student-form-container">
-      <div className="update-student-form">
-        <h2>Update Student</h2>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Name:
-            <input
-              type="text"
-              value={updatedName}
-              onChange={(e) => setUpdatedName(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Classroom ID:
-            <input
-              type="number"
-              value={updatedClassroomId}
-              onChange={(e) => setUpdatedClassroomId(parseInt(e.target.value))}
-              required
-            />
-          </label>
-          <div className="form-buttons">
-            <button type="submit">Update</button>
-            <button type="button" onClick={onClose}>Cancel</button>
-          </div>
-        </form>
-      </div>
+    <div className="update-student-form">
+      <h2>Update Student</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            name="name"
+            value={updatedStudentData.name}
+            onChange={handleInputChange}
+            required
+          />
+        </label>
+        <label>
+          Classroom ID:
+          <input
+            type="number"
+            name="classroom_id"
+            value={updatedStudentData.classroom_id}
+            onChange={handleInputChange}
+            required
+          />
+        </label>
+        <div className="form-buttons">
+          <button type="submit">Update</button>
+          <button type="button" onClick={onClose}>Cancel</button>
+        </div>
+      </form>
     </div>
   );
-};
+}
 
 export default UpdateStudentForm;
