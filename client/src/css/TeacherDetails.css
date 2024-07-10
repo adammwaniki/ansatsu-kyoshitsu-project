@@ -1,137 +1,75 @@
 .teacher-details-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-  
-  .back-link {
-    display: inline-block;
-    margin-bottom: 1rem;
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .teacher-details {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-  }
-  
-  .teacher-header {
-    background-color: #007bff;
-    color: white;
-    padding: 2rem;
-    text-align: center;
-  }
-  
-  .teacher-avatar {
-    width: 120px;
-    height: 120px;
-    background-color: white;
-    color: #007bff;
-    font-size: 3rem;
-    font-weight: bold;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 1rem;
-  }
-  
-  .teacher-header h1 {
-    margin: 0;
-    font-size: 2rem;
-  }
-  
-  .teacher-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
-    padding: 2rem;
-  }
-  
-  .info-section {
-    margin-bottom: 1.5rem;
-  }
-  
-  .info-section h2 {
-    font-size: 1.2rem;
-    color: #007bff;
-    margin-bottom: 0.5rem;
-  }
-  
-  .info-section p {
-    margin: 0.5rem 0;
-  }
-  
-  .teacher-bio {
-    padding: 0 2rem 2rem;
-  }
-  
-  .teacher-bio h2 {
-    font-size: 1.2rem;
-    color: #007bff;
-    margin-bottom: 0.5rem;
-  }
-  
-  .teacher-not-found {
-    text-align: center;
-    margin-top: 2rem;
-  }
-  
-  .teacher-not-found h2 {
-    color: #dc3545;
-  }
-  
-  @media (max-width: 600px) {
-    .teacher-info {
-      grid-template-columns: 1fr;
-    }
-  }
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
 
-  /* ... (previous styles remain the same) ... */
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
 
-.teacher-assignments {
-    padding: 0 2rem 2rem;
-  }
-  
-  .teacher-assignments h2 {
-    font-size: 1.2rem;
-    color: #007bff;
-    margin-bottom: 1rem;
-  }
-  
-  .teacher-assignments table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .teacher-assignments th,
-  .teacher-assignments td {
-    text-align: left;
-    padding: 0.5rem;
-    border-bottom: 1px solid #e0e0e0;
-  }
-  
-  .teacher-assignments th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-  }
-  
-  .teacher-assignments tr:last-child td {
-    border-bottom: none;
-  }
-  
-  @media (max-width: 600px) {
-    .teacher-assignments {
-      overflow-x: auto;
-    }
-    
-    .teacher-assignments table {
-      min-width: 300px;
-    }
-  }
-  
-  /* ... (remaining styles stay the same) ... */
+.teacher-details {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.teacher-header {
+  background-color: #007bff;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.teacher-header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.teacher-info {
+  padding: 2rem;
+}
+
+.teacher-info p {
+  margin: 0.5rem 0;
+}
+
+.teacher-subjects {
+  padding: 0 2rem 2rem;
+}
+
+.teacher-subjects h2 {
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 0.5rem;
+}
+
+.subject-item {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.subject-item h3 {
+  color: #28a745;
+  margin-top: 0;
+}
+
+.subject-item h4 {
+  margin-bottom: 0.5rem;
+}
+
+.subject-item ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.subject-item li {
+  margin-bottom: 0.5rem;
+}

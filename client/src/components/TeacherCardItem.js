@@ -5,18 +5,17 @@ import '../css/TeacherCardItem.css';
 function TeacherCardItem({ teacher, onUpdate, onDelete }) {
   return (
     <div className="teacher-card">
-      <div className="teacher-avatar">
-        {teacher.name.charAt(0)}
-      </div>
+      <div className="teacher-avatar">{teacher.name.charAt(0)}</div>
       <div className="teacher-info">
-        <Link to={`/teacher/${teacher.teacher_id}`} className="teacher-name">{teacher.name}</Link>
-        <span className="teacher-email">{teacher.email}</span>
+        <h2>{teacher.name}</h2>
+        <p>{teacher.email}</p>
       </div>
       <div className="teacher-actions">
-        <button className="update-btn" onClick={function() { onUpdate(teacher.teacher_id); }}>
+        <Link to={`/teacher/${teacher.id}`} className="action-btn details-btn">Details</Link>
+        <button className="action-btn update-btn" onClick={() => onUpdate(teacher.id)}>
           Update
         </button>
-        <button className="delete-btn" onClick={function() { onDelete(teacher.teacher_id); }}>
+        <button className="action-btn delete-btn" onClick={() => onDelete(teacher.id)}>
           Delete
         </button>
       </div>

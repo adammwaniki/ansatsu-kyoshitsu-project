@@ -1,29 +1,34 @@
-import React, { useState } from 'react';
-import '../css/AddTeacher.css';
+import React, { useState, useEffect } from 'react';
+import '../css/UpdateTeacher.css';
 
-function AddTeacher({ onClose, onAddTeacher }) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [classroomId, setClassroomId] = useState('');
-  const [password, setPassword] = useState('');
+function UpdateTeacher({ teacher, onClose, onUpdate }) {
+  const [name, setName] = useState(teacher.name);
+  const [email, setEmail] = useState(teacher.email);
+  const [classroomId, setClassroomId] = useState(teacher.classroom_id);
+
+  useEffect(() => {
+    setName(teacher.name);
+    setEmail(teacher.email);
+    setClassroomId(teacher.classroom_id);
+  }, [teacher]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const newTeacher = {
+    const updatedTeacher = {
       name,
       email,
       classroom_id: parseInt(classroomId),
-      password
     };
 
-    await onAddTeacher(newTeacher);
+    await onUpdate(teacher.id, updatedTeacher);
+    onClose();
   };
 
   return (
-    <div className="add-teacher-modal">
-      <div className="add-teacher-content">
-        <h2>Add New Teacher</h2>
+    <div className="update-teacher-modal">
+      <div className="update-teacher-content">
+        <h2>Update Teacher</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Name:</label>
@@ -55,18 +60,8 @@ function AddTeacher({ onClose, onAddTeacher }) {
               required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
           <div className="form-actions">
-            <button type="submit">Add Teacher</button>
+            <button type="submit">Update Teacher</button>
             <button type="button" onClick={onClose}>Cancel</button>
           </div>
         </form>
@@ -75,4 +70,4 @@ function AddTeacher({ onClose, onAddTeacher }) {
   );
 }
 
-export default AddTeacher;
+export default UpdateTeacher;
