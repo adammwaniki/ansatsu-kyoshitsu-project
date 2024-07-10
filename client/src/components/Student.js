@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import StudentCardItem from './StudentCardItem';
-import StudentDetails from './StudentDetails';
 import AddStudentForm from './AddStudentForm';
-import UpdateStudentForm from './UpdateStudentForm';
 import '../css/Student.css';
 
 const API_URL = '/students';
@@ -12,9 +10,7 @@ function Student() {
   const [students, setStudents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedStudent, setSelectedStudent] = useState(null);
   const [isAddStudentOpen, setIsAddStudentOpen] = useState(false);
-  const [isUpdateStudentOpen, setIsUpdateStudentOpen] = useState(false);
   const [newStudentData, setNewStudentData] = useState({
     name: '',
     classroom_id: '',
@@ -81,10 +77,9 @@ function Student() {
           student.id === studentId ? { ...student, ...updatedStudent } : student
         )
       );
-      setIsUpdateStudentOpen(false);
     } catch (error) {
       console.error('Error updating student:', error);
-      // You might want to show an error message to the user here
+      // Handle error state or display a message to the user
     }
   }
 
@@ -99,7 +94,7 @@ function Student() {
       setStudents(prevStudents => prevStudents.filter(student => student.id !== studentId));
     } catch (error) {
       console.error('Error deleting student:', error);
-      // You might want to show an error message to the user here
+      // Handle error state or display a message to the user
     }
   }
 
@@ -109,16 +104,6 @@ function Student() {
 
   function handleAddStudentClose() {
     setIsAddStudentOpen(false);
-  }
-
-  function handleUpdateStudent(student) {
-    setSelectedStudent(student);
-    setIsUpdateStudentOpen(true);
-  }
-
-  function handleUpdateStudentClose() {
-    setSelectedStudent(null);
-    setIsUpdateStudentOpen(false);
   }
 
   function handleInputChange(event) {
@@ -154,24 +139,10 @@ function Student() {
             key={student.id}
             student={student}
             onDelete={() => deleteStudent(student.id)}
-            onUpdate={() => handleUpdateStudent(student)}
+            onUpdate={(updatedData) => updateStudent(student.id, updatedData)}
           />
         ))}
       </div>
-      {selectedStudent && (
-        <StudentDetails
-          id={selectedStudent.id}
-          onClose={() => setSelectedStudent(null)}
-        />
-      )}
-      
-      {isUpdateStudentOpen && selectedStudent && (
-        <UpdateStudentForm
-          student={selectedStudent}
-          onClose={handleUpdateStudentClose}
-          onUpdate={updateStudent}
-        />
-      )}
     </div>
   );
 }
