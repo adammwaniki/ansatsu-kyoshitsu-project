@@ -3,8 +3,8 @@
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
-from config import db
-
+from config import db, bcrypt
+from sqlalchemy.ext.hybrid import hybrid_property
 
 # Teacher model
 class Teacher(db.Model, SerializerMixin):
@@ -13,7 +13,7 @@ class Teacher(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)  # Primary key
     name = db.Column(db.String(120), nullable=False)  # Teacher's name
     email = db.Column(db.String(255), unique=True, nullable=False)  # Teacher's unique email
-    password = db.Column(db.String(32), nullable=False)  # Teacher's password
+    _password_hash = db.Column(db.String, nullable=False)  # Teacher's password
     classroom_id = db.Column(db.Integer, db.ForeignKey('classrooms.id'))  # Foreign key to Classroom
 
     # Relationship with TeacherSubject
@@ -36,6 +36,20 @@ class Teacher(db.Model, SerializerMixin):
         if len(password) < 6:
             raise ValueError("Password should be more than 6 characters ")
         return password
+    
+    @hybrid_property
+    def password_hash(self):
+        raise Exception('Password hashes may not be viewed.')
+
+    @password_hash.setter
+    def password_hash(self, password):
+        password_hash = bcrypt.generate_password_hash(
+            password.encode('utf-8'))
+        self._password_hash = password_hash.decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(
+            self._password_hash, password.encode('utf-8'))
 
     def __repr__(self):
         return f'<Teacher(id={self.id}, name={self.name})>'

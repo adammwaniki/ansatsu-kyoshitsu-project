@@ -3,7 +3,7 @@
 
 # Remote library imports
 from flask_migrate import Migrate
-from flask import Flask, request, make_response, jsonify
+from flask import Flask, request, make_response, jsonify, session
 from flask_restful import Api, Resource
 import os
 
@@ -18,6 +18,8 @@ DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db'
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config['SECRET_KEY'] = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
+
 app.json.compact = False
 
 migrate = Migrate(app, db)
@@ -354,6 +356,56 @@ class ClassroomsByID(Resource):
         return response
 
 api.add_resource(ClassroomsByID, '/classrooms/<int:id>')
+
+class ClearSession(Resource):
+
+    def delete(self):
+    
+        session['page_views'] = None
+        session['teacher_id'] = None
+
+        return {}, 204
+
+class Signup(Resource):
+    
+    def post(self):
+        json = request.get_json()
+        user = Teacher(
+            name=json['name'],
+            email = json['email']
+        )
+        user.password_hash = json['password']
+        db.session.add(user)
+        db.session.commit()
+        return user.to_dict(), 201
+
+class CheckSession(Resource):
+    def get(self):
+        if not session.get('teacher_id'):
+            return {}, 204
+        return Teacher.query.filter(Teacher.id == session['teacher_id']).first().to_dict()
+
+class Login(Resource):
+    def post(self):
+        json = request.get_json()
+        user = Teacher.query.filter(Teacher.email == json['email']).first()
+        if not user or not user.authenticate(json['password']):
+            return {}, 401
+        session['teacher_id'] = user.id
+        return user.to_dict()
+
+class Logout(Resource):
+
+    def delete(self):
+        session['page_views'] = None
+        session['teacher_id'] = None
+        return {}, 204
+
+api.add_resource(ClearSession, '/clear', endpoint='clear')
+api.add_resource(Signup, '/signup', endpoint='signup')
+api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
+api.add_resource(Logout, '/logout', endpoint='logout')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

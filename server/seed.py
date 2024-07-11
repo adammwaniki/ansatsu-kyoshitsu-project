@@ -23,7 +23,7 @@ with app.app_context():
         teacher = Teacher(
             name=fake.name(),
             email=fake.unique.email(),
-            password='password',  # Use a simple password for seeding
+            _password_hash='password',  # Use a simple password for seeding
             classroom_id=rc(classrooms).id
         )
         teachers.append(teacher)
