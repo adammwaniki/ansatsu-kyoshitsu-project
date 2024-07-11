@@ -56,7 +56,7 @@ function Student() {
       setNewStudentData({ name: '', classroom_id: '', subject_id: '' }); // Reset form data
     } catch (error) {
       console.error('Error adding student:', error);
-      // You might want to show an error message to the user here
+      
     }
   }
 
@@ -80,7 +80,7 @@ function Student() {
       );
     } catch (error) {
       console.error('Error updating student:', error);
-      // Handle error state or display a message to the user
+      
     }
   }
 
@@ -95,7 +95,7 @@ function Student() {
       setStudents(prevStudents => prevStudents.filter(student => student.id !== studentId));
     } catch (error) {
       console.error('Error deleting student:', error);
-      // Handle error state or display a message to the user
+      
     }
   }
 
