@@ -99,9 +99,9 @@ function Teacher() {
           onChange={handleSearchChange}
           className="search-input"
         />
-        <button className="add-teacher-btn" onClick={handleAddTeacherOpen}>
+        {/*<button className="add-teacher-btn" onClick={handleAddTeacherOpen}>
           Add Teacher
-        </button>
+        </button>*/}
       </div>
       {isAddTeacherOpen && (
         <AddTeacher onClose={handleAddTeacherClose} onAddTeacher={handleAddTeacher} />

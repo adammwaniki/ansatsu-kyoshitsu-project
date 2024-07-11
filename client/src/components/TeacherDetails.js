@@ -50,7 +50,7 @@ function TeacherDetails() {
           {teacher.teacher_subjects.map(ts => (
             <div key={ts.id} className="subject-item">
               <h3>{ts.subject.name}</h3>
-              <p><strong>Topic:</strong> {ts.topic}</p>
+              {/*<p><strong>Topic:</strong> {ts.topic}</p>*/}
               <h4>Students:</h4>
               <ul>
                 {ts.subject.student_subjects.map(ss => (
