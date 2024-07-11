@@ -6,6 +6,7 @@ function TeacherCardItem({ teacher, onDelete, onUpdate }) {
   const [isEditing, setIsEditing] = useState(false);
   const [updatedName, setUpdatedName] = useState(teacher.name);
   const [updatedEmail, setUpdatedEmail] = useState(teacher.email);
+  const [showUpdate, setShowUpdate] = useState(false);
 
   const handleUpdateClick = () => {
     setIsEditing(true);
@@ -56,13 +57,20 @@ function TeacherCardItem({ teacher, onDelete, onUpdate }) {
       </div>
       <div className="teacher-actions">
         <Link to={`/teacher/${teacher.id}`} className="action-btn details-btn">Details</Link>
-        <button
+        {
+          showUpdate &&(
+            <>
+            <button
           className="action-btn update-btn"
           onClick={handleUpdateClick}
           disabled={isEditing}
         >
           Update
         </button>
+            </>
+          )
+        }
+        
         {isEditing && (
           <>
             <button className="action-btn save-btn" onClick={handleSaveClick}>
