@@ -1,0 +1,66 @@
+.student-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.student-info {
+  margin-bottom: 10px;
+}
+
+.student-form {
+  margin-bottom: 10px;
+}
+
+.student-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.student-form input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.form-buttons {
+  margin-top: 10px;
+}
+
+.form-buttons button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.form-buttons button.save-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.form-buttons button.save-btn:hover {
+  background-color: #218838;
+}
+
+.form-buttons button.cancel-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.form-buttons button.cancel-btn:hover {
+  background-color: #c82333;
+}
+
+.form-buttons button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
