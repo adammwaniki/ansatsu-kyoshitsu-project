@@ -374,6 +374,9 @@ class Signup(Resource):
             name=json['name'],
             email = json['email']
         )
+        existing_user = Teacher.query.filter_by(email=json['email']).first()
+        if existing_user:
+            return jsonify({'error': 'Email address already in use'}), 400
         user.password_hash = json['password']
         db.session.add(user)
         db.session.commit()
@@ -406,6 +409,15 @@ api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Logout, '/logout', endpoint='logout')
+
+@app.before_request
+def check_if_logged_in():
+    # Whitelisted endpoints that do not require login
+    whitelist = ['index', 'signup', 'login']
+
+    # Checking if the teacher is not logged in and the endpoint is not whitelisted
+    if not session.get('teacher_id') and request.endpoint not in whitelist:
+        return jsonify({'error': 'Unauthorized'}), 401
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
