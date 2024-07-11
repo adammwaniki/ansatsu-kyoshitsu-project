@@ -1,0 +1,9 @@
+.classroom-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-color: #F5F7FA;
+  }
+  
+  /* Adjust styles for ClassroomCard as needed */
+  

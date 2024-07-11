@@ -1,10 +1,13 @@
 import React from 'react';
+import ClassroomCard from './ClassroomCard';
+import '../css/Classroom.css'; // Import CSS file for styling
 
-function Classroom() {
+const Classroom = ({ classrooms }) => {
   return (
-    <div>
-      <h1>Classrooms</h1>
-      <p>This page will display information about our classrooms.</p>
+    <div className="classroom-list">
+      {classrooms.map(classroom => (
+        <ClassroomCard key={classroom.id} classroom={classroom} />
+      ))}
     </div>
   );
 }

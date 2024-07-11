@@ -1,0 +1,38 @@
+.classroom-card {
+    background-color: #eaf1fc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease-in-out;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .classroom-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .classroom-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .btn-view-details {
+    display: inline-block;
+    background-color: #044e9e;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .btn-view-details:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Adjust other styles as per your design requirements */
+  
