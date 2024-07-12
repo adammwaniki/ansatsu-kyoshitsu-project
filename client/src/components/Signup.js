@@ -21,7 +21,7 @@ function Signup() {
                 classroom_id: classroomId
             });
             if (response.status === 201) {
-                history.push('/teachers'); // Navigate to '/teachers' on successful sign-up
+                history.push('/login'); // Navigate to '/teachers' on successful sign-up
             }
         } catch (error) {
             console.error('Signup error:', error);
