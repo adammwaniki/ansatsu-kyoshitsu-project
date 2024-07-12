@@ -39,7 +39,7 @@ To do this run the following
 
 `flask db init`
 
-`flask db migrate -m "migration message"
+`flask db migrate -m "migration message"`
 
 `flask db upgrade`
 
